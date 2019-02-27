@@ -1,0 +1,8 @@
+1. urlDrugName (categorical): name of drug
+2. condition (categorical): name of condition
+3. benefitsReview (text): patient on benefits
+4. sideEffectsReview (text): patient on side effects
+5. commentsReview (text): overall patient comment
+6. rating (numerical): 10 star patient rating
+7. sideEffects (categorical): 5 step side effect rating
+8. effectiveness (categorical): 5 step effectiveness rating
