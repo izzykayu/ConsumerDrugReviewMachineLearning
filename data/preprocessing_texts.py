@@ -1,5 +1,9 @@
 import nltk
 import sys
+# this script is to be used after the feature engineering is performed
+# this script will write out a normalized line by line document that can be later used for word embeddings
+# but also the pre-processed text will be explored in classification and similarity between
+#  pre-processed drug box label warnings and other reviews
 """"
     [a-zA-Z]+
     [A-Z][a-z]*
@@ -11,8 +15,8 @@ import sys
 import re
 import pandas as pd
 
-train = pd.read_csv('drugLibTrain_raw.tsv', sep="\t")
-print(list(train.columns))
+# train = pd.read_csv('drugLibTrain_raw.tsv', sep="\t")
+# print(list(train.columns))
 import os
 # outfile = open('cleaned_mimic_notes.txt', 'a')
 # counter = 0
@@ -62,11 +66,13 @@ pattern = r'''(?x)    # set flag to allow verbose regexps
 ...   | [][.,;"'?():-_`]  # these are separate tokens; includes ], [
 ... '''
 print(nltk.regexp_tokenize(text, pattern))
-
-
+def preProcPlusFE(df, columnNames):
+    for x in columnNames:
+        df['char_count_pratLemmatized' + x] = df[x]
+        df['word_density'] = df['char_count'] / (df['word_count'] + 1)
+    # df['lexical_diversity' + x] = df[x].apply(
+    #     lambda x1: lexical_diversity([wrd for wrd in x1.split() if not wrd.isnumeric()]))
+    return df
 
 if __name__ == '__main__':
-
-    wtn = WordsToNumbers()
-    for num in nums:
-        print("%d : %s", num, str(wtn.parseWord(num)))
+    preProcPlusFE(sys.argv[1], sys.argv[2])

@@ -1,4 +1,5 @@
 import re
+# this code comes from DeepEHR -- might be interesting to explore how this may affect an NLP task with our current dataset
 
 class WordsToNumbers():
     """A class that can translate strings of common English words that
