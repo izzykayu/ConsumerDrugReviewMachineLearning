@@ -4,7 +4,7 @@ import random
 import pandas as pd
 import numpy as np
 import os
-
+import sys
 
 
 def select_only_discharge_notes(data):
@@ -24,18 +24,22 @@ def clean_mimic(s):
     s = re.sub('\[\*\*.*\*\*\]|\\n|\s+', ' ', s).replace('  ', ' ').lower()
     return s
 
+def Clean4WordEmbeddingsMIMICIII(pathname1, pathname2):
+    """
+    pathname1: path to csv for mimiciii noteevents (NOTEEVENTS.csv)
+    pathname2: path to txt where cleaned mimic text will go
+    """
+    mimic_note_events = pd.read_csv(pathname1)
 
-mimic_note_events = pd.read_csv('~/PycharmProjects/NOTEEVENTS.csv')
-#test_sample = mimic_note_events.sample(10)
-#print(test_sample)
+    outfile = open(pathname2, 'a')
+    counter = 0
+    mimic_text = mimic_note_events['TEXT'].fillna("fillna")
+    for index,line in enumerate(mimic_text) # test_sample['TEXT']):
+        counter += 1
+        new_note = clean_mimic(line)+ os.linesep
+        outfile.write(new_note)
 
-outfile = open('cleaned_mimic_notes.txt', 'a')
-counter = 0
-mimic_text = mimic_note_events['TEXT'].fillna("fillna")
-for index,line in enumerate(mimic_text) # test_sample['TEXT']):
-    counter += 1
-    new_note = clean_mimic(line)+ os.linesep
-    outfile.write(new_note)
+    print('cleaned and wrote out ',counter, 'notes!')
+    outfile.close()
+    
 
-print('cleaned and wrote out ',counter, 'notes!')
-outfile.close()
